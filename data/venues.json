@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Soho garden ",
+    "location": "Meydan",
+    "contactName": "Mazen",
+    "contactEmail": "mazen@soho.com",
+    "contactPhone": "0987678",
+    "instagram": "@sabdelmaksoud",
+    "description": "",
+    "venueType": "nightclub",
+    "capacity": 2000,
+    "dealType": "",
+    "rate": "",
+    "notes": "",
+    "status": "active",
+    "id": "mn14xac88tuwub",
+    "accessCode": "VNU-2JZVP7Q8",
+    "totalEvents": 0,
+    "totalMembersSent": 0,
+    "createdAt": "2026-03-22T02:25:41.528Z"
+  },
+  {
+    "name": "soho garden",
+    "location": "maydan",
+    "contactName": "johnsaliba",
+    "contactEmail": "example@sohoharden.com",
+    "contactPhone": "0544552088",
+    "instagram": "sohogarden",
+    "description": "",
+    "venueType": "nightclub",
+    "capacity": 10000,
+    "dealType": "",
+    "rate": "",
+    "notes": "",
+    "status": "pending",
+    "id": "mn175rds9xrypo",
+    "accessCode": "VNU-DUEE8DP8",
+    "totalEvents": 0,
+    "totalMembersSent": 0,
+    "createdAt": "2026-03-22T03:28:16.096Z"
+  }
+]

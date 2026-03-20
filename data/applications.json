@@ -1,0 +1,34 @@
+[
+  {
+    "fullName": "Sarah Mokhtar",
+    "instagram": "sarah.mokhtar",
+    "followerCount": 12500,
+    "email": "sarah@example.com",
+    "phone": "+971501234567",
+    "city": "Dubai",
+    "photos": [],
+    "whyJoin": "I bring energy, style, and a strong Instagram presence to every night out. My network is full of high-profile women in Dubai.",
+    "referredBy": "",
+    "heardFrom": "instagram",
+    "id": "mn13k0afsguzcx",
+    "status": "approved",
+    "appliedAt": "2026-03-22T01:47:22.359Z",
+    "reviewNote": "",
+    "reviewedAt": "2026-03-22T01:48:18.279Z"
+  },
+  {
+    "fullName": "mazz",
+    "instagram": "mazz_ofc",
+    "followerCount": 3400,
+    "email": "mazz@ticketezzy.com",
+    "phone": "0544552088",
+    "city": "Dubai",
+    "photos": [],
+    "whyJoin": "am sexy",
+    "referredBy": "",
+    "heardFrom": "instagram",
+    "id": "mn173vwkc09sjd",
+    "status": "pending",
+    "appliedAt": "2026-03-22T03:26:48.644Z"
+  }
+]

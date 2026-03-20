@@ -1,0 +1,91 @@
+[
+  {
+    "venueId": "",
+    "venueName": "WHITE Dubai",
+    "title": "Thursday Noir",
+    "date": "2026-03-26",
+    "time": "10:00 PM",
+    "arrivalDeadline": "10:30 PM",
+    "dressCode": "All black, elegant",
+    "description": "",
+    "capacity": 30,
+    "perks": [
+      "Free entry",
+      "VIP table",
+      "2 drinks"
+    ],
+    "status": "upcoming",
+    "id": "mn13m7r9mj7ueq",
+    "rsvps": [
+      {
+        "memberId": "mn13l7fttrkqar",
+        "memberName": "Sarah Mokhtar",
+        "status": "attended",
+        "rsvpAt": "2026-03-22T01:49:51.450Z",
+        "checkInToken": "3W7KFYFzr9KEKmsA",
+        "checkedInAt": "2026-03-23T11:27:44.313Z",
+        "checkedInBy": "qr",
+        "contentStatus": "not_submitted"
+      }
+    ],
+    "createdAt": "2026-03-22T01:49:05.349Z"
+  },
+  {
+    "venueId": "mn14xac88tuwub",
+    "venueName": "Soho garden ",
+    "title": "Saturday Glow Night",
+    "date": "2026-04-04",
+    "time": "10:00 PM",
+    "arrivalDeadline": "10:30 PM",
+    "dressCode": "Smart Elegant",
+    "description": "",
+    "capacity": 30,
+    "perks": [
+      "Open Bar",
+      "VIP Table",
+      "Bottle Service"
+    ],
+    "status": "upcoming",
+    "id": "mn321r1usrol48",
+    "rsvps": [
+      {
+        "memberId": "mn13l7fttrkqar",
+        "memberName": "Sarah Mokhtar",
+        "instagram": "sarah.mokhtar",
+        "followerCount": 12500,
+        "status": "attended",
+        "rsvpAt": "2026-03-23T10:41:17.043Z",
+        "checkedInAt": "2026-03-23T11:07:22.936Z",
+        "checkedInBy": "venue",
+        "contentStatus": "not_submitted"
+      }
+    ],
+    "createdAt": "2026-03-23T10:40:43.314Z"
+  },
+  {
+    "venueId": "mn14xac88tuwub",
+    "venueName": "Soho garden ",
+    "title": "Friday Night Glow",
+    "date": "2026-04-27",
+    "time": "10:00 pm",
+    "arrivalDeadline": "",
+    "dressCode": "",
+    "description": "",
+    "capacity": 4,
+    "perks": [],
+    "status": "upcoming",
+    "id": "mn32hg27f5ujuw",
+    "rsvps": [
+      {
+        "memberId": "mn13l7fttrkqar",
+        "memberName": "Sarah Mokhtar",
+        "instagram": "sarah.mokhtar",
+        "followerCount": 12500,
+        "status": "confirmed",
+        "rsvpAt": "2026-03-23T11:34:43.909Z",
+        "checkInToken": "EcPv6Td9UcpnkBMP"
+      }
+    ],
+    "createdAt": "2026-03-23T10:52:55.567Z"
+  }
+]
