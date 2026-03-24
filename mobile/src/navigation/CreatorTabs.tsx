@@ -1,11 +1,31 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/config';
 import { CreatorHomeScreen } from '../screens/creator/CreatorHomeScreen';
+import { CreatorEventDetailScreen } from '../screens/creator/CreatorEventDetailScreen';
+import { ContentSubmitScreen } from '../screens/creator/ContentSubmitScreen';
 import { CreatorProfileScreen } from '../screens/creator/CreatorProfileScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function CreatorEventsStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: COLORS.surface },
+        headerTintColor: COLORS.text,
+        headerTitleStyle: { fontWeight: '600' },
+      }}
+    >
+      <Stack.Screen name="CreatorHome" component={CreatorHomeScreen} options={{ title: 'Events' }} />
+      <Stack.Screen name="EventDetail" component={CreatorEventDetailScreen} options={{ title: 'Event Details' }} />
+      <Stack.Screen name="ContentSubmit" component={ContentSubmitScreen} options={{ title: 'Submit Content' }} />
+    </Stack.Navigator>
+  );
+}
 
 export function CreatorTabs() {
   return (
@@ -21,16 +41,13 @@ export function CreatorTabs() {
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.textMuted,
-        headerStyle: { backgroundColor: COLORS.surface },
-        headerTintColor: COLORS.text,
-        headerTitleStyle: { fontWeight: '600' },
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={CreatorHomeScreen}
+        name="Events"
+        component={CreatorEventsStack}
         options={{
-          title: 'Events',
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" size={size} color={color} />
           ),
@@ -41,6 +58,8 @@ export function CreatorTabs() {
         component={CreatorProfileScreen}
         options={{
           title: 'Profile',
+          headerStyle: { backgroundColor: COLORS.surface },
+          headerTintColor: COLORS.text,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),

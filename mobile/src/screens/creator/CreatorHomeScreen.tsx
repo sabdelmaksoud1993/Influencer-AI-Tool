@@ -111,7 +111,8 @@ export function CreatorHomeScreen({ navigation }: any) {
           events.map((event) => {
             const myRsvp = event.rsvps?.find((r) => r.memberId === user?.id);
             return (
-              <Card key={event.id} style={styles.eventCard}>
+              <TouchableOpacity key={event.id} onPress={() => navigation.navigate('EventDetail', { eventId: event.id })}>
+              <Card style={styles.eventCard}>
                 <View style={styles.eventHeader}>
                   <Text style={styles.eventTitle}>{event.title}</Text>
                   <Badge
@@ -155,6 +156,7 @@ export function CreatorHomeScreen({ navigation }: any) {
                   </TouchableOpacity>
                 )}
               </Card>
+              </TouchableOpacity>
             );
           })
         )}

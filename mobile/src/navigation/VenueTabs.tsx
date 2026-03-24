@@ -7,6 +7,7 @@ import { VenueHomeScreen } from '../screens/venue/VenueHomeScreen';
 import { VenueProfileScreen } from '../screens/venue/VenueProfileScreen';
 import { CreateEventScreen } from '../screens/venue/CreateEventScreen';
 import { EventDetailScreen } from '../screens/venue/EventDetailScreen';
+import { QRScannerScreen } from '../screens/venue/QRScannerScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ function VenueEventsStack() {
       <Stack.Screen name="VenueHome" component={VenueHomeScreen} options={{ title: 'My Events' }} />
       <Stack.Screen name="CreateEvent" component={CreateEventScreen} options={{ title: 'Create Event' }} />
       <Stack.Screen name="EventDetail" component={EventDetailScreen} options={{ title: 'Event Details' }} />
+      <Stack.Screen name="QRScanner" component={QRScannerScreen} options={{ title: 'Scan QR', headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -50,6 +52,17 @@ export function VenueTabs() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ScanQR"
+        component={QRScannerScreen}
+        options={{
+          title: 'Scan QR',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="qr-code" size={size} color={color} />
           ),
         }}
       />
