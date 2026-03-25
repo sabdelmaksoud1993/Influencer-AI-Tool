@@ -7,6 +7,7 @@ import { AdminApplicationsScreen } from '../screens/admin/AdminApplicationsScree
 import { AdminMembersScreen } from '../screens/admin/AdminMembersScreen';
 import { AdminVenuesScreen } from '../screens/admin/AdminVenuesScreen';
 import { AdminSettingsScreen } from '../screens/admin/AdminSettingsScreen';
+import { AdminNotificationsScreen } from '../screens/admin/AdminNotificationsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,6 +63,16 @@ export function AdminTabs() {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="business" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Notify"
+        component={AdminNotificationsScreen}
+        options={{
+          title: 'Notify',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="notifications" size={size} color={color} />
           ),
         }}
       />

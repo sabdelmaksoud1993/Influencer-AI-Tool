@@ -8,8 +8,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING } from '../../constants/config';
 import { Input } from '../../components/Input';
@@ -17,6 +19,7 @@ import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../api/client';
+import { uploadImage } from '../../api/upload';
 
 type PickerField = 'date' | 'time' | 'arrivalDeadline' | null;
 
@@ -24,6 +27,7 @@ export function CreateEventScreen({ navigation }: any) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [activePicker, setActivePicker] = useState<PickerField>(null);
+  const [eventImage, setEventImage] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     title: '',
@@ -135,6 +139,31 @@ export function CreateEventScreen({ navigation }: any) {
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
         <Text style={styles.title}>Create New Event</Text>
 
+        {/* Event Image */}
+        <Text style={styles.label}>Event Image (optional)</Text>
+        <TouchableOpacity onPress={async () => {
+          const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 0.8,
+          });
+          if (!result.canceled && result.assets[0]) {
+            setEventImage(result.assets[0].uri);
+          }
+        }}>
+          <Card style={styles.imagePickerCard}>
+            {eventImage ? (
+              <Image source={{ uri: eventImage }} style={styles.eventImagePreview} />
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Ionicons name="image-outline" size={36} color={COLORS.textMuted} />
+                <Text style={styles.imagePlaceholderText}>Tap to add event cover image</Text>
+              </View>
+            )}
+          </Card>
+        </TouchableOpacity>
+
         <Input
           label="Event Title *"
           placeholder="Saturday Night Out"
@@ -215,6 +244,25 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: SPACING.xs,
     marginTop: SPACING.sm,
+  },
+  imagePickerCard: {
+    marginBottom: SPACING.md,
+    overflow: 'hidden',
+  },
+  eventImagePreview: {
+    width: '100%',
+    height: 180,
+    borderRadius: 12,
+  },
+  imagePlaceholder: {
+    height: 140,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: SPACING.sm,
+  },
+  imagePlaceholderText: {
+    color: COLORS.textMuted,
+    fontSize: 14,
   },
   pickerCard: {
     flexDirection: 'row',

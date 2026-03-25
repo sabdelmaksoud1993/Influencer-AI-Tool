@@ -41,7 +41,14 @@
           "cameraPermission": "Allow Glow Pass to access your camera for QR code scanning"
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#EC4899"
+        }
+      ]
     ]
   }
 }
