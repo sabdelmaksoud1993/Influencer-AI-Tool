@@ -1,9 +1,5 @@
-// Point to your deployed Vercel URL for production
-// Use local IP for development (not localhost — that's the phone itself)
-const DEV_API_URL = 'http://192.168.1.100:3000';
-const PROD_API_URL = 'https://myglowpass.com';
-
-export const API_BASE_URL = __DEV__ ? DEV_API_URL : PROD_API_URL;
+// Always use the live Vercel API — same backend for web and mobile
+export const API_BASE_URL = 'https://www.myglowpass.com';
 
 export const COLORS = {
   primary: '#EC4899',       // Pink (matches web)

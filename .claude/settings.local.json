@@ -28,7 +28,23 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" --connect-timeout 5 -H \"User-Agent: Mozilla/5.0\" -H \"Referer: https://www.instagram.com/\" \"https://instagram.fjai1-3.fna.fbcdn.net/v/t51.2885-19/342214580_551908883735189_2040002274787338812_n.jpg?stp=dst-jpg_s320x320_tt6\")",
       "Bash(npm ls:*)",
       "Bash(rm -f \"Influencer-Webapp.zip\")",
-      "Bash(zip -r \"Influencer-Webapp.zip\" \"Influencer Webapp\" -x \"Influencer Webapp/node_modules/*\" \"Influencer Webapp/.next/*\" \"Influencer Webapp/.git/*\")"
+      "Bash(zip -r \"Influencer-Webapp.zip\" \"Influencer Webapp\" -x \"Influencer Webapp/node_modules/*\" \"Influencer Webapp/.next/*\" \"Influencer Webapp/.git/*\")",
+      "Bash(npm run:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh auth:*)",
+      "Bash(cat ~/Desktop/everything-claude-code/skills/claude-api/*.md)",
+      "Read(//Users/sherifabdelmaksoud/.claude/**)",
+      "Bash(node scripts/install-apply.js --help)",
+      "Bash(node scripts/install-apply.js --target claude --profile full --with skills --dry-run)",
+      "Bash(node scripts/install-apply.js --target claude --profile full --with capability:database --with capability:security --with capability:research --with capability:content --with capability:social --with capability:media --with capability:orchestration --with capability:agentic --with capability:devops --with capability:supply-chain --with capability:documents --with agent:architect --with agent:code-reviewer --with agent:security-reviewer --with agent:tdd-guide --with agent:planner --with agent:build-error-resolver --with agent:e2e-runner --with agent:refactor-cleaner --with agent:doc-updater --with skill:tdd-workflow --with skill:continuous-learning --with skill:eval-harness --with skill:verification-loop --with skill:strategic-compact --with skill:coding-standards --with skill:frontend-patterns --with skill:backend-patterns --with skill:security-review --with skill:deep-research)",
+      "Bash(grep -v \"Screenshot\\\\|\\\\.png\\\\|\\\\.mov\\\\|\\\\.xlsx\\\\|\\\\.key\\\\|~$\\\\|untitled\\\\|everything-claude-code\\\\|job_bot\")",
+      "Bash(for dir:*)",
+      "Bash(do echo:*)",
+      "Bash(gh release:*)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 generate-audit-report.py)",
+      "Bash(python3 -m pip show git-filter-repo)",
+      "Bash(python3 -m git_filter_repo --invert-paths --path .env.local --force)"
     ]
   }
 }

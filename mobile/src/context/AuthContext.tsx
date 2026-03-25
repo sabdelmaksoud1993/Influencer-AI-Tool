@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Try to get fresh user data
-      const data = await api.get<{ user: User }>('/api/auth/mobile/me');
+      const data = await api.get<{ user: User }>('/api/mobile/me');
       await api.saveUser(data.user as unknown as Record<string, unknown>);
       setState({ user: data.user, isLoading: false, isAuthenticated: true });
     } catch {
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(async (code: string) => {
     const data = await api.post<{ token: string; user: User }>(
-      '/api/auth/mobile/login',
+      '/api/mobile/login',
       { code }
     );
     await api.setToken(data.token);
