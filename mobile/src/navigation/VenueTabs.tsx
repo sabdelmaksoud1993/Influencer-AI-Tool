@@ -8,6 +8,7 @@ import { VenueProfileScreen } from '../screens/venue/VenueProfileScreen';
 import { CreateEventScreen } from '../screens/venue/CreateEventScreen';
 import { EventDetailScreen } from '../screens/venue/EventDetailScreen';
 import { QRScannerScreen } from '../screens/venue/QRScannerScreen';
+import { GenerateQRScreen } from '../screens/venue/GenerateQRScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,6 +64,18 @@ export function VenueTabs() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="qr-code" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="GenerateQR"
+        component={GenerateQRScreen}
+        options={{
+          title: 'QR Codes',
+          headerStyle: { backgroundColor: COLORS.surface },
+          headerTintColor: COLORS.text,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="download-outline" size={size} color={color} />
           ),
         }}
       />

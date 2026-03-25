@@ -14,7 +14,7 @@ import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { useAuth } from '../../context/AuthContext';
 
-export function LoginScreen() {
+export function LoginScreen({ navigation }: any) {
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -88,13 +88,13 @@ export function LoginScreen() {
 
           <Button
             title="Apply as Creator"
-            onPress={() => Alert.alert('Apply', 'Visit myglowpass.com/apply to submit your application')}
+            onPress={() => navigation.navigate('Apply')}
             variant="outline"
           />
 
           <Button
             title="Register as Venue"
-            onPress={() => Alert.alert('Register', 'Visit myglowpass.com to register your venue')}
+            onPress={() => navigation.navigate('RegisterVenue')}
             variant="secondary"
             style={{ marginTop: SPACING.sm }}
           />

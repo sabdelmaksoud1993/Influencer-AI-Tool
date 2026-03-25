@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, Linking } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, Alert, Linking, AppState } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useFocusEffect } from '@react-navigation/native';
 import { COLORS, SPACING } from '../../constants/config';
 import { Button } from '../../components/Button';
 import { api } from '../../api/client';
@@ -9,6 +10,26 @@ export function QRScannerScreen({ navigation }: any) {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [cameraActive, setCameraActive] = useState(false);
+
+  // Activate camera when screen is focused, deactivate when leaving
+  useFocusEffect(
+    useCallback(() => {
+      setCameraActive(true);
+      setScanned(false);
+      setProcessing(false);
+
+      // Also handle app going to background/foreground
+      const sub = AppState.addEventListener('change', (state) => {
+        setCameraActive(state === 'active');
+      });
+
+      return () => {
+        setCameraActive(false);
+        sub.remove();
+      };
+    }, [])
+  );
 
   if (!permission) {
     return (
@@ -46,11 +67,14 @@ export function QRScannerScreen({ navigation }: any) {
       // QR code contains URL like myglowpass.com/checkin?token=XXX
       let token = data;
       if (data.includes('token=')) {
-        const url = new URL(data);
-        token = url.searchParams.get('token') || data;
+        try {
+          const url = new URL(data);
+          token = url.searchParams.get('token') || data;
+        } catch {
+          // Not a valid URL, use raw data
+        }
       }
 
-      // Call check-in API
       const result = await api.post<{ message: string; memberName?: string }>(
         `/api/events/${token}/checkin`,
         { token }
@@ -95,25 +119,31 @@ export function QRScannerScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <CameraView
-        style={styles.camera}
-        barcodeScannerSettings={{
-          barcodeTypes: ['qr'],
-        }}
-        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-      >
-        <View style={styles.overlay}>
-          <View style={styles.scanArea}>
-            <View style={[styles.corner, styles.topLeft]} />
-            <View style={[styles.corner, styles.topRight]} />
-            <View style={[styles.corner, styles.bottomLeft]} />
-            <View style={[styles.corner, styles.bottomRight]} />
+      {cameraActive ? (
+        <CameraView
+          style={styles.camera}
+          barcodeScannerSettings={{
+            barcodeTypes: ['qr'],
+          }}
+          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+        >
+          <View style={styles.overlay}>
+            <View style={styles.scanArea}>
+              <View style={[styles.corner, styles.topLeft]} />
+              <View style={[styles.corner, styles.topRight]} />
+              <View style={[styles.corner, styles.bottomLeft]} />
+              <View style={[styles.corner, styles.bottomRight]} />
+            </View>
+            <Text style={styles.hint}>
+              {processing ? 'Processing...' : 'Point camera at QR code'}
+            </Text>
           </View>
-          <Text style={styles.hint}>
-            {processing ? 'Processing...' : 'Point camera at QR code'}
-          </Text>
+        </CameraView>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.message}>Camera paused</Text>
         </View>
-      </CameraView>
+      )}
       <View style={styles.footer}>
         <Button
           title="Cancel"
