@@ -7,6 +7,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { COLORS, SPACING } from '../../constants/config';
 import { Input } from '../../components/Input';
@@ -25,6 +26,7 @@ export function RegisterVenueScreen({ navigation }: any) {
     instagram: '',
     description: '',
     capacity: '',
+    targetAudience: '',
   });
 
   const updateField = (field: string, value: string) => {
@@ -32,8 +34,8 @@ export function RegisterVenueScreen({ navigation }: any) {
   };
 
   const handleSubmit = async () => {
-    if (!form.name || !form.contactEmail || !form.contactName) {
-      Alert.alert('Error', 'Please fill in venue name, contact name, and email');
+    if (!form.name || !form.contactEmail || !form.contactName || !form.targetAudience) {
+      Alert.alert('Error', 'Please fill in venue name, contact name, email, and target audience');
       return;
     }
     if (form.name.length > 100 || form.contactName.length > 100) {
@@ -62,6 +64,7 @@ export function RegisterVenueScreen({ navigation }: any) {
         instagram: form.instagram.replace('@', ''),
         description: form.description,
         capacity: parseInt(form.capacity, 10) || 100,
+        targetAudience: form.targetAudience,
         dealType: '',
         rate: '',
         notes: '',
@@ -92,6 +95,22 @@ export function RegisterVenueScreen({ navigation }: any) {
         <Input label="Venue Type" placeholder="Nightclub, Lounge, Rooftop..." value={form.venueType} onChangeText={(v) => updateField('venueType', v)} />
         <Input label="Location" placeholder="Downtown Dubai" value={form.location} onChangeText={(v) => updateField('location', v)} />
         <Input label="Capacity" placeholder="200" value={form.capacity} onChangeText={(v) => updateField('capacity', v)} keyboardType="number-pad" />
+
+        <Text style={styles.fieldLabel}>Target Audience *</Text>
+        <View style={styles.targetRow}>
+          {(['males', 'females', 'both'] as const).map((option) => (
+            <TouchableOpacity
+              key={option}
+              style={[styles.targetButton, form.targetAudience === option && styles.targetButtonActive]}
+              onPress={() => updateField('targetAudience', option)}
+            >
+              <Text style={[styles.targetText, form.targetAudience === option && styles.targetTextActive]}>
+                {option === 'males' ? 'Males' : option === 'females' ? 'Females' : 'Both'}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         <Input label="Contact Name *" placeholder="John Smith" value={form.contactName} onChangeText={(v) => updateField('contactName', v)} />
         <Input label="Contact Email *" placeholder="contact@venue.com" value={form.contactEmail} onChangeText={(v) => updateField('contactEmail', v)} keyboardType="email-address" autoCapitalize="none" />
         <Input label="Contact Phone" placeholder="+971..." value={form.contactPhone} onChangeText={(v) => updateField('contactPhone', v)} keyboardType="phone-pad" />
@@ -110,4 +129,10 @@ const styles = StyleSheet.create({
   scroll: { padding: SPACING.lg },
   title: { fontSize: 22, fontWeight: '700', color: COLORS.text },
   subtitle: { fontSize: 14, color: COLORS.primary, marginBottom: SPACING.lg },
+  fieldLabel: { fontSize: 13, fontWeight: '600', color: COLORS.textSecondary, marginBottom: 6, marginTop: SPACING.sm },
+  targetRow: { flexDirection: 'row', gap: 10, marginBottom: SPACING.sm },
+  targetButton: { flex: 1, paddingVertical: 12, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.05)' },
+  targetButtonActive: { borderColor: COLORS.primary, backgroundColor: 'rgba(236,72,153,0.15)' },
+  targetText: { fontSize: 13, color: COLORS.textSecondary },
+  targetTextActive: { color: COLORS.primary, fontWeight: '600' },
 });

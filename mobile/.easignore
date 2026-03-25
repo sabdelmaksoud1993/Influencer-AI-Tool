@@ -1,0 +1,38 @@
+# Dependencies (EAS installs fresh)
+node_modules/
+
+# Expo cache
+.expo/
+dist/
+web-build/
+
+# Native builds
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+/ios
+/android
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# Dev tools (not needed in build)
+generate-icons.js
+jest.config.js
+__tests__/
+
+# Env
+.env*.local

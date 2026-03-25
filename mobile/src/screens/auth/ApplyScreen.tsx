@@ -7,6 +7,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { COLORS, SPACING } from '../../constants/config';
 import { Input } from '../../components/Input';
@@ -22,6 +23,7 @@ export function ApplyScreen({ navigation }: any) {
     email: '',
     phone: '',
     city: '',
+    gender: '',
     whyJoin: '',
   });
 
@@ -30,8 +32,8 @@ export function ApplyScreen({ navigation }: any) {
   };
 
   const handleSubmit = async () => {
-    if (!form.fullName || !form.instagram || !form.email) {
-      Alert.alert('Error', 'Please fill in name, Instagram, and email');
+    if (!form.fullName || !form.instagram || !form.email || !form.gender) {
+      Alert.alert('Error', 'Please fill in name, Instagram, email, and gender');
       return;
     }
     if (form.fullName.length > 100) {
@@ -57,6 +59,7 @@ export function ApplyScreen({ navigation }: any) {
         email: form.email,
         phone: form.phone,
         city: form.city,
+        gender: form.gender,
         whyJoin: form.whyJoin,
         photos: [],
         referredBy: '',
@@ -90,6 +93,23 @@ export function ApplyScreen({ navigation }: any) {
         <Input label="Email *" placeholder="you@email.com" value={form.email} onChangeText={(v) => updateField('email', v)} keyboardType="email-address" autoCapitalize="none" />
         <Input label="Phone" placeholder="+971..." value={form.phone} onChangeText={(v) => updateField('phone', v)} keyboardType="phone-pad" />
         <Input label="City" placeholder="Dubai" value={form.city} onChangeText={(v) => updateField('city', v)} />
+
+        <Text style={styles.fieldLabel}>Gender *</Text>
+        <View style={styles.genderRow}>
+          <TouchableOpacity
+            style={[styles.genderButton, form.gender === 'male' && styles.genderButtonActive]}
+            onPress={() => updateField('gender', 'male')}
+          >
+            <Text style={[styles.genderText, form.gender === 'male' && styles.genderTextActive]}>Male</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.genderButton, form.gender === 'female' && styles.genderButtonActive]}
+            onPress={() => updateField('gender', 'female')}
+          >
+            <Text style={[styles.genderText, form.gender === 'female' && styles.genderTextActive]}>Female</Text>
+          </TouchableOpacity>
+        </View>
+
         <Input label="Why do you want to join?" placeholder="Tell us about yourself..." value={form.whyJoin} onChangeText={(v) => updateField('whyJoin', v)} multiline numberOfLines={3} style={{ minHeight: 80, textAlignVertical: 'top' }} />
 
         <Button title="Submit Application" onPress={handleSubmit} loading={loading} size="lg" style={{ marginTop: SPACING.sm }} />
@@ -104,4 +124,10 @@ const styles = StyleSheet.create({
   scroll: { padding: SPACING.lg },
   title: { fontSize: 22, fontWeight: '700', color: COLORS.text },
   subtitle: { fontSize: 14, color: COLORS.primary, marginBottom: SPACING.lg },
+  fieldLabel: { fontSize: 13, fontWeight: '600', color: COLORS.textSecondary, marginBottom: 6, marginTop: SPACING.sm },
+  genderRow: { flexDirection: 'row', gap: 12, marginBottom: SPACING.sm },
+  genderButton: { flex: 1, paddingVertical: 12, borderRadius: 8, borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.05)' },
+  genderButtonActive: { borderColor: COLORS.primary, backgroundColor: 'rgba(236,72,153,0.15)' },
+  genderText: { fontSize: 14, color: COLORS.textSecondary },
+  genderTextActive: { color: COLORS.primary, fontWeight: '600' },
 });
