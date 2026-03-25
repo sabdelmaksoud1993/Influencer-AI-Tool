@@ -36,6 +36,19 @@ export function RegisterVenueScreen({ navigation }: any) {
       Alert.alert('Error', 'Please fill in venue name, contact name, and email');
       return;
     }
+    if (form.name.length > 100 || form.contactName.length > 100) {
+      Alert.alert('Error', 'Name is too long (max 100 characters)');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.contactEmail)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+    if (form.description.length > 2000) {
+      Alert.alert('Error', 'Description is too long (max 2000 characters)');
+      return;
+    }
 
     setLoading(true);
     try {

@@ -16,7 +16,7 @@ Notifications.setNotificationHandler({
 
 export async function registerForPushNotifications(): Promise<string | null> {
   if (!Device.isDevice) {
-    console.log('Push notifications only work on physical devices');
+    if (__DEV__) console.log('Push notifications only work on physical devices');
     return null;
   }
 
@@ -29,7 +29,7 @@ export async function registerForPushNotifications(): Promise<string | null> {
   }
 
   if (finalStatus !== 'granted') {
-    console.log('Push notification permission not granted');
+    if (__DEV__) console.log('Push notification permission not granted');
     return null;
   }
 
@@ -44,11 +44,16 @@ export async function registerForPushNotifications(): Promise<string | null> {
   const tokenData = await Notifications.getExpoPushTokenAsync();
   const pushToken = tokenData.data;
 
-  // Register token with backend
-  try {
-    await api.post('/api/mobile/push-token', { pushToken });
-  } catch (err) {
-    console.log('Failed to register push token:', err);
+  // Register token with backend (retry up to 3 times)
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      await api.post('/api/mobile/push-token', { pushToken });
+      break;
+    } catch {
+      if (attempt < 2) {
+        await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+      }
+    }
   }
 
   return pushToken;

@@ -1,8 +1,10 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'fallback-secret-change-me'
-);
+const secretValue = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
+if (!secretValue) {
+  console.error('FATAL: AUTH_SECRET or NEXTAUTH_SECRET must be set');
+}
+const JWT_SECRET = new TextEncoder().encode(secretValue || 'MISSING_SECRET');
 
 export interface TokenPayload {
   id: string;

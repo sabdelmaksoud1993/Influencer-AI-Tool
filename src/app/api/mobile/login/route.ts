@@ -68,9 +68,9 @@ export async function POST(request: Request) {
       });
     }
 
-    // Admin login
-    const adminPassword = process.env.ADMIN_PASSWORD || 'cercle2024';
-    if (code === adminPassword) {
+    // Admin login — password must be set via env var
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (adminPassword && code === adminPassword) {
       const token = await createToken({
         id: 'admin',
         name: 'Admin',

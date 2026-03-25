@@ -20,7 +20,7 @@ export function CreatorEventDetailScreen({ route, navigation }: any) {
       const data = await api.get<{ events: Event[] }>(`/api/events?id=${eventId}`);
       if (data.events?.length > 0) setEvent(data.events[0]);
     } catch (err) {
-      console.log('Failed to fetch event:', err);
+      if (__DEV__) console.log('Failed to fetch event:', err);
     }
   }, [eventId]);
 

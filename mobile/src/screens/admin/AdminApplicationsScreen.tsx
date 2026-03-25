@@ -17,7 +17,7 @@ export function AdminApplicationsScreen() {
       const data = await api.get<{ applications: Application[] }>('/api/applications');
       setApplications(data.applications || []);
     } catch (err) {
-      console.log('Failed to fetch applications:', err);
+      if (__DEV__) console.log('Failed to fetch applications:', err);
     }
   }, []);
 

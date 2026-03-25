@@ -21,7 +21,7 @@ export function AdminMembersScreen() {
       setMembers(data.members || []);
       setFiltered(data.members || []);
     } catch (err) {
-      console.log('Failed to fetch members:', err);
+      if (__DEV__) console.log('Failed to fetch members:', err);
     }
   }, []);
 

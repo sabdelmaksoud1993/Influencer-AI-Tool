@@ -34,6 +34,19 @@ export function ApplyScreen({ navigation }: any) {
       Alert.alert('Error', 'Please fill in name, Instagram, and email');
       return;
     }
+    if (form.fullName.length > 100) {
+      Alert.alert('Error', 'Name is too long (max 100 characters)');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+    if (form.whyJoin.length > 2000) {
+      Alert.alert('Error', 'Response is too long (max 2000 characters)');
+      return;
+    }
 
     setLoading(true);
     try {

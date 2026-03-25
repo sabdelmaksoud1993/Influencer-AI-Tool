@@ -27,7 +27,7 @@ export function VenueAnalyticsScreen() {
       );
       setEvents(data.events || []);
     } catch (err) {
-      console.log('Failed to fetch events:', err);
+      if (__DEV__) console.log('Failed to fetch events:', err);
     }
   }, [user?.id]);
 

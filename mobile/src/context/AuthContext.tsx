@@ -58,15 +58,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await api.get<{ user: User }>('/api/mobile/me');
       await api.saveUser(data.user as unknown as Record<string, unknown>);
       setState({ user: data.user, isLoading: false, isAuthenticated: true });
-    } catch {
-      // Token expired or invalid — try cached user
-      const cached = await api.getSavedUser();
-      if (cached) {
-        setState({ user: cached as unknown as User, isLoading: false, isAuthenticated: true });
-      } else {
-        await api.clearToken();
-        setState({ user: null, isLoading: false, isAuthenticated: false });
+    } catch (err) {
+      // Distinguish network errors from auth errors
+      const message = err instanceof Error ? err.message : '';
+      const isNetworkError = message.includes('Network') || message.includes('timeout') || message.includes('fetch');
+
+      if (isNetworkError) {
+        // Offline — use cached user but only briefly
+        const cached = await api.getSavedUser();
+        if (cached) {
+          setState({ user: cached as unknown as User, isLoading: false, isAuthenticated: true });
+          return;
+        }
       }
+      // Auth failure (401/403) or no cache — force re-login
+      await api.clearToken();
+      setState({ user: null, isLoading: false, isAuthenticated: false });
     }
   }, []);
 

@@ -24,7 +24,7 @@ export function AdminHomeScreen() {
       const data = await api.get<DashboardStats>('/api/stats');
       setStats(data);
     } catch (err) {
-      console.log('Failed to fetch stats:', err);
+      if (__DEV__) console.log('Failed to fetch stats:', err);
     }
   }, []);
 

@@ -17,7 +17,7 @@ export function AdminVenuesScreen() {
       const data = await api.get<{ venues: Venue[] }>('/api/venues');
       setVenues(data.venues || []);
     } catch (err) {
-      console.log('Failed to fetch venues:', err);
+      if (__DEV__) console.log('Failed to fetch venues:', err);
     }
   }, []);
 

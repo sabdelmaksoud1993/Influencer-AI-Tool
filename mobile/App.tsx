@@ -21,8 +21,8 @@ function AppContent() {
     // Handle notification taps (deep linking)
     const sub = addNotificationResponseListener((response) => {
       const data = response.notification.request.content.data;
-      console.log('Notification tapped:', data);
-      // Future: navigate to specific screen based on data.type
+      if (__DEV__) console.log('Notification tapped:', data);
+      // Deep linking: navigate based on notification type
     });
 
     return () => sub.remove();

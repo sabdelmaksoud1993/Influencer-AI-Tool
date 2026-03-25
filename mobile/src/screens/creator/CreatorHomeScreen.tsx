@@ -28,7 +28,7 @@ export function CreatorHomeScreen({ navigation }: any) {
       const data = await api.get<{ events: Event[] }>('/api/events?status=upcoming');
       setEvents(data.events || []);
     } catch (err) {
-      console.log('Failed to fetch events:', err);
+      if (__DEV__) console.log('Failed to fetch events:', err);
     } finally {
       setLoading(false);
     }

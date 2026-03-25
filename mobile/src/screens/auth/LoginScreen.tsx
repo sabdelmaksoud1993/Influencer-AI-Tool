@@ -18,6 +18,8 @@ import { useAuth } from '../../context/AuthContext';
 export function LoginScreen({ navigation }: any) {
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
+  const [failCount, setFailCount] = useState(0);
+  const [lockoutUntil, setLockoutUntil] = useState(0);
   const { login } = useAuth();
 
   // Animation values
@@ -113,7 +115,15 @@ export function LoginScreen({ navigation }: any) {
     ).start();
   }, []);
 
+  const isLockedOut = Date.now() < lockoutUntil;
+
   const handleLogin = async () => {
+    if (isLockedOut) {
+      const secondsLeft = Math.ceil((lockoutUntil - Date.now()) / 1000);
+      Alert.alert('Too Many Attempts', `Please wait ${secondsLeft} seconds before trying again.`);
+      return;
+    }
+
     const trimmed = code.trim();
     if (!trimmed) {
       Alert.alert('Error', 'Please enter your access code');
@@ -123,7 +133,15 @@ export function LoginScreen({ navigation }: any) {
     setLoading(true);
     try {
       await login(trimmed);
+      setFailCount(0);
     } catch (err) {
+      const newFailCount = failCount + 1;
+      setFailCount(newFailCount);
+      // Exponential backoff: 5s, 15s, 30s, 60s
+      if (newFailCount >= 3) {
+        const lockoutMs = Math.min(5000 * Math.pow(2, newFailCount - 3), 60000);
+        setLockoutUntil(Date.now() + lockoutMs);
+      }
       const message = err instanceof Error ? err.message : 'Login failed';
       Alert.alert('Login Failed', message);
     } finally {
@@ -239,9 +257,7 @@ export function LoginScreen({ navigation }: any) {
         {/* Animated Footer */}
         <Animated.View style={[styles.footer, { opacity: footerOpacity }]}>
           <Text style={styles.footerText}>
-            Creators: CRC-XXXXXXXX{'\n'}
-            Venues: VNU-XXXXXXXX{'\n'}
-            Admin: Password
+            Access the City. Capture the Glow.
           </Text>
         </Animated.View>
       </ScrollView>

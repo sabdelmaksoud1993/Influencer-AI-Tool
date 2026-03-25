@@ -32,7 +32,7 @@ export function GenerateQRScreen({ navigation }: any) {
       );
       setEvents(active);
     } catch (err) {
-      console.log('Failed to fetch events:', err);
+      if (__DEV__) console.log('Failed to fetch events:', err);
     }
   }, [user?.id]);
 

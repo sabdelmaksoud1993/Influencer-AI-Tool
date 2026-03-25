@@ -75,8 +75,17 @@ export function QRScannerScreen({ navigation }: any) {
         }
       }
 
+      // Validate token format — alphanumeric only, 8-64 chars
+      const TOKEN_PATTERN = /^[a-zA-Z0-9_-]{8,64}$/;
+      if (!TOKEN_PATTERN.test(token)) {
+        Alert.alert('Invalid QR Code', 'This QR code is not a valid Glow Pass check-in code.');
+        setScanned(false);
+        setProcessing(false);
+        return;
+      }
+
       const result = await api.post<{ message: string; memberName?: string }>(
-        `/api/events/${token}/checkin`,
+        '/api/events/checkin-qr',
         { token }
       );
 

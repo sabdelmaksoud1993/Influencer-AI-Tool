@@ -20,7 +20,7 @@ export function EventDetailScreen({ route }: any) {
         setEvent(data.events[0]);
       }
     } catch (err) {
-      console.log('Failed to fetch event:', err);
+      if (__DEV__) console.log('Failed to fetch event:', err);
     }
   }, [eventId]);
 

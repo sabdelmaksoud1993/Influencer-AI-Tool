@@ -34,6 +34,14 @@ export function AdminNotificationsScreen() {
       Alert.alert('Error', 'Please enter a title and message');
       return;
     }
+    if (title.trim().length > 100) {
+      Alert.alert('Error', 'Title is too long (max 100 characters)');
+      return;
+    }
+    if (message.trim().length > 500) {
+      Alert.alert('Error', 'Message is too long (max 500 characters)');
+      return;
+    }
 
     Alert.alert(
       'Send Notification',
