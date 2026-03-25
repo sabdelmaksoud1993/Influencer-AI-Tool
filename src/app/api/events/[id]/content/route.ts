@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEventById, addRSVP, getMemberByCode, getVenueByCode, recalculateContentScore, recalculateTier, getMemberById } from '@/lib/db';
 import { notifyAdminContentSubmitted, sendContentVerified } from '@/lib/email';
+import { notifyContentVerified } from '@/lib/push';
 
 // Creator submits content proof OR venue/admin verifies it
 export async function POST(
@@ -103,6 +104,9 @@ export async function POST(
   // Auto-recalculate content score and tier
   await recalculateContentScore(memberId);
   await recalculateTier(memberId);
+
+  // Trigger: Content verified → notify creator
+  notifyContentVerified(memberId, event.title, id).catch(() => {});
 
   // Send verification email to creator
   const creatorMember = await getMemberById(memberId);

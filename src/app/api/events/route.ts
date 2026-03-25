@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEvents, createEvent, getVenueByCode } from '@/lib/db';
+import { notifyNewEvent } from '@/lib/push';
 
 export async function GET(request: NextRequest) {
   const events = await getEvents();
@@ -53,6 +54,8 @@ export async function POST(request: NextRequest) {
       perks: body.perks || [],
       status: 'upcoming',
     });
+    // Trigger: New event → notify all creators
+    notifyNewEvent(event.title, event.venueName, event.id).catch(() => {});
     return NextResponse.json(event, { status: 201 });
   } catch {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });

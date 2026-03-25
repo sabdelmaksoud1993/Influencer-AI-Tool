@@ -8,6 +8,7 @@ import { VenueProfileScreen } from '../screens/venue/VenueProfileScreen';
 import { CreateEventScreen } from '../screens/venue/CreateEventScreen';
 import { EventDetailScreen } from '../screens/venue/EventDetailScreen';
 import { QRScannerScreen } from '../screens/venue/QRScannerScreen';
+import { EditEventScreen } from '../screens/venue/EditEventScreen';
 import { GenerateQRScreen } from '../screens/venue/GenerateQRScreen';
 import { VenueAnalyticsScreen } from '../screens/venue/VenueAnalyticsScreen';
 
@@ -27,6 +28,7 @@ function VenueEventsStack() {
       <Stack.Screen name="CreateEvent" component={CreateEventScreen} options={{ title: 'Create Event' }} />
       <Stack.Screen name="EventDetail" component={EventDetailScreen} options={{ title: 'Event Details' }} />
       <Stack.Screen name="QRScanner" component={QRScannerScreen} options={{ title: 'Scan QR', headerShown: false }} />
+      <Stack.Screen name="EditEvent" component={EditEventScreen} options={{ title: 'Edit Event' }} />
     </Stack.Navigator>
   );
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { completeEvent, getVenueByCode, getEventById, getMemberById } from '@/lib/db';
 import { sendStrikeWarning } from '@/lib/email';
+import { notifyNoShow, notifyContentDeadline } from '@/lib/push';
 
 export async function POST(
   request: NextRequest,
@@ -30,12 +31,19 @@ export async function POST(
     return NextResponse.json({ error: 'Event not found' }, { status: 404 });
   }
 
-  // Send strike emails to no-shows
+  // Send strike emails + push to no-shows, content deadline to attended
+  const attendedMembers = result.rsvps?.filter(r => r.status === 'attended' && r.contentStatus !== 'verified') || [];
   for (const memberId of confirmedBefore) {
     const member = await getMemberById(memberId);
     if (member?.email) {
       sendStrikeWarning(member.email, member.fullName, (member.strikes || 0), `No-show at ${result.title}`).catch(console.error);
     }
+    // Trigger: No-show → notify creator
+    notifyNoShow(memberId, result.title).catch(() => {});
+  }
+  // Trigger: Content deadline → notify attended creators without content
+  for (const rsvp of attendedMembers) {
+    notifyContentDeadline(rsvp.memberId, result.title, id).catch(() => {});
   }
 
   return NextResponse.json({ event: result, message: 'Event completed. No-shows have been penalized.' });

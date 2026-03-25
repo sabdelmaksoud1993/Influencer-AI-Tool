@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { api } from '../api/client';
 import { User } from '../types';
+import {
+  isBiometricAvailable,
+  isBiometricEnabled,
+  authenticateWithBiometric,
+} from '../api/biometric';
 
 interface AuthState {
   user: User | null;
@@ -36,6 +41,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!token) {
         setState({ user: null, isLoading: false, isAuthenticated: false });
         return;
+      }
+
+      // If biometric is enabled, require authentication
+      const bioAvailable = await isBiometricAvailable();
+      const bioEnabled = await isBiometricEnabled();
+      if (bioAvailable && bioEnabled) {
+        const authenticated = await authenticateWithBiometric();
+        if (!authenticated) {
+          setState({ user: null, isLoading: false, isAuthenticated: false });
+          return;
+        }
       }
 
       // Try to get fresh user data

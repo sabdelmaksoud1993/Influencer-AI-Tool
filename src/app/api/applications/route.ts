@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getApplications, createApplication, checkDuplicateApplication } from '@/lib/db';
 import { sendApplicationReceived, notifyAdminNewApplication } from '@/lib/email';
+import { notifyNewApplication } from '@/lib/push';
 
 export async function GET(request: NextRequest) {
   const password = request.headers.get('x-admin-key');
@@ -42,6 +43,8 @@ export async function POST(request: NextRequest) {
     // Send emails (non-blocking)
     sendApplicationReceived(email, fullName, instagram.replace('@', '')).catch(console.error);
     notifyAdminNewApplication(fullName, instagram.replace('@', ''), followerCount || '0', email).catch(console.error);
+    // Trigger: New application → notify admin push
+    notifyNewApplication(fullName, app.id).catch(() => {});
 
     return NextResponse.json(app, { status: 201 });
   } catch {

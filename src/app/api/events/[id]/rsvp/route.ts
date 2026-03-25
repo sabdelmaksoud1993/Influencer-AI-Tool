@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEventById, addRSVP, getMemberByCode, getVenueByCode, getVenueById, generateCheckInToken, updateMember, getMemberById } from '@/lib/db';
 import { sendEventAccepted, sendEventRejected } from '@/lib/email';
+import { notifyRSVPConfirmed } from '@/lib/push';
 
 export async function POST(
   request: NextRequest,
@@ -52,6 +53,8 @@ export async function POST(
     // Generate QR check-in token when accepted + send email
     if (status === 'confirmed') {
       await generateCheckInToken(id, body.memberId);
+      // Trigger: RSVP confirmed → notify creator
+      notifyRSVPConfirmed(body.memberId, event.title, id).catch(() => {});
       const creatorMember = await getMemberById(body.memberId);
       if (creatorMember?.email) {
         const eventDate = event.date || 'TBD';

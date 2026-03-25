@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getVenues, createVenue } from '@/lib/db';
 import { notifyAdminNewVenue } from '@/lib/email';
+import { notifyVenuePending } from '@/lib/push';
 
 export async function GET(request: NextRequest) {
   const password = request.headers.get('x-admin-key');
@@ -39,6 +40,8 @@ export async function POST(request: NextRequest) {
     // Notify admin of new venue registration
     if (!isAdmin) {
       notifyAdminNewVenue(body.name, body.location, body.contactName, body.contactEmail).catch(console.error);
+      // Trigger: Venue pending → notify admin push
+      notifyVenuePending(body.name, venue.id).catch(() => {});
     }
 
     return NextResponse.json(venue, { status: 201 });
