@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING } from '../../constants/config';
 import { Card } from '../../components/Card';
 import { useAuth } from '../../context/AuthContext';
+import { AnimatedEntry } from '../../components/AnimatedEntry';
 import { api } from '../../api/client';
 import { DashboardStats } from '../../types';
 
@@ -42,24 +43,36 @@ export function AdminHomeScreen() {
       style={styles.container}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.primary} />}
     >
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>Admin Dashboard</Text>
-          <Text style={styles.name}>Glow Pass</Text>
+      <AnimatedEntry delay={0} direction="down" distance={20}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>Admin Dashboard</Text>
+            <Text style={styles.name}>Glow Pass</Text>
+          </View>
+          <View style={styles.avatar}>
+            <Ionicons name="shield-checkmark" size={24} color="#FFF" />
+          </View>
         </View>
-        <View style={styles.avatar}>
-          <Ionicons name="shield-checkmark" size={24} color="#000" />
-        </View>
-      </View>
+      </AnimatedEntry>
 
-      <View style={styles.statsGrid}>
-        <StatCard icon="document-text" label="Applications" value={stats?.totalApplications || 0} subValue={`${stats?.pendingApplications || 0} pending`} color={COLORS.primary} />
-        <StatCard icon="people" label="Members" value={stats?.totalMembers || 0} subValue={`${stats?.activeMembers || 0} active`} color={COLORS.success} />
-        <StatCard icon="calendar" label="Events" value={stats?.totalEvents || 0} subValue={`${stats?.upcomingEvents || 0} upcoming`} color="#3B82F6" />
-        <StatCard icon="business" label="Venues" value={stats?.totalVenues || 0} subValue="registered" color={COLORS.warning} />
-        <StatCard icon="trending-up" label="Attendance" value={`${stats?.avgAttendanceRate || 0}%`} subValue="avg rate" color="#8B5CF6" />
-        <StatCard icon="checkmark-circle" label="Content" value={stats?.totalContentVerified || 0} subValue="verified" color="#EC4899" />
-      </View>
+      <AnimatedEntry delay={150}>
+        <View style={styles.statsGrid}>
+          <StatCard icon="document-text" label="Applications" value={stats?.totalApplications || 0} subValue={`${stats?.pendingApplications || 0} pending`} color={COLORS.primary} />
+          <StatCard icon="people" label="Members" value={stats?.totalMembers || 0} subValue={`${stats?.activeMembers || 0} active`} color={COLORS.success} />
+        </View>
+      </AnimatedEntry>
+      <AnimatedEntry delay={300}>
+        <View style={styles.statsGrid}>
+          <StatCard icon="calendar" label="Events" value={stats?.totalEvents || 0} subValue={`${stats?.upcomingEvents || 0} upcoming`} color="#3B82F6" />
+          <StatCard icon="business" label="Venues" value={stats?.totalVenues || 0} subValue="registered" color={COLORS.warning} />
+        </View>
+      </AnimatedEntry>
+      <AnimatedEntry delay={450}>
+        <View style={styles.statsGrid}>
+          <StatCard icon="trending-up" label="Attendance" value={`${stats?.avgAttendanceRate || 0}%`} subValue="avg rate" color="#8B5CF6" />
+          <StatCard icon="checkmark-circle" label="Content" value={stats?.totalContentVerified || 0} subValue="verified" color="#EC4899" />
+        </View>
+      </AnimatedEntry>
     </ScrollView>
   );
 }

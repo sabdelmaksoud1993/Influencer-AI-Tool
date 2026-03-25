@@ -12,6 +12,7 @@ import { COLORS, SPACING } from '../../constants/config';
 import { Card } from '../../components/Card';
 import { Badge } from '../../components/Badge';
 import { useAuth } from '../../context/AuthContext';
+import { AnimatedEntry } from '../../components/AnimatedEntry';
 import { api } from '../../api/client';
 import { Event } from '../../types';
 
@@ -53,34 +54,39 @@ export function VenueHomeScreen({ navigation }: any) {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.primary} />}
     >
       {/* Header */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>Welcome,</Text>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Text style={styles.type}>{user?.venueType || 'Venue'}</Text>
+      <AnimatedEntry delay={0} direction="down" distance={20}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>Welcome,</Text>
+            <Text style={styles.name}>{user?.name}</Text>
+            <Text style={styles.type}>{user?.venueType || 'Venue'}</Text>
+          </View>
+          <View style={styles.avatar}>
+            <Ionicons name="business" size={24} color="#FFF" />
+          </View>
         </View>
-        <View style={styles.avatar}>
-          <Ionicons name="business" size={24} color="#000" />
-        </View>
-      </View>
+      </AnimatedEntry>
 
       {/* Stats */}
-      <View style={styles.statsRow}>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{events.length}</Text>
-          <Text style={styles.statLabel}>Total Events</Text>
-        </Card>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{upcomingCount}</Text>
-          <Text style={styles.statLabel}>Upcoming</Text>
-        </Card>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{totalRsvps}</Text>
-          <Text style={styles.statLabel}>RSVPs</Text>
-        </Card>
-      </View>
+      <AnimatedEntry delay={200}>
+        <View style={styles.statsRow}>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{events.length}</Text>
+            <Text style={styles.statLabel}>Total Events</Text>
+          </Card>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{upcomingCount}</Text>
+            <Text style={styles.statLabel}>Upcoming</Text>
+          </Card>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{totalRsvps}</Text>
+            <Text style={styles.statLabel}>RSVPs</Text>
+          </Card>
+        </View>
+      </AnimatedEntry>
 
       {/* Events List */}
+      <AnimatedEntry delay={400}>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Your Events</Text>
@@ -138,6 +144,7 @@ export function VenueHomeScreen({ navigation }: any) {
           ))
         )}
       </View>
+      </AnimatedEntry>
     </ScrollView>
   );
 }

@@ -13,6 +13,7 @@ import { COLORS, SPACING } from '../../constants/config';
 import { Card } from '../../components/Card';
 import { Badge } from '../../components/Badge';
 import { useAuth } from '../../context/AuthContext';
+import { AnimatedEntry } from '../../components/AnimatedEntry';
 import { api } from '../../api/client';
 import { Event } from '../../types';
 
@@ -65,37 +66,41 @@ export function CreatorHomeScreen({ navigation }: any) {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.primary} />}
     >
       {/* Profile Header */}
-      <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{user?.name?.charAt(0) || 'C'}</Text>
-        </View>
-        <View style={styles.headerInfo}>
-          <Text style={styles.greeting}>Welcome back,</Text>
-          <Text style={styles.name}>{user?.name}</Text>
-          <View style={styles.badges}>
-            {user?.tier && <Badge text={user.tier} variant={tierColor as any} />}
-            {user?.instagram && (
-              <Text style={styles.handle}>@{user.instagram}</Text>
-            )}
+      <AnimatedEntry delay={0} direction="down" distance={20}>
+        <View style={styles.header}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{user?.name?.charAt(0) || 'C'}</Text>
+          </View>
+          <View style={styles.headerInfo}>
+            <Text style={styles.greeting}>Welcome back,</Text>
+            <Text style={styles.name}>{user?.name}</Text>
+            <View style={styles.badges}>
+              {user?.tier && <Badge text={user.tier} variant={tierColor as any} />}
+              {user?.instagram && (
+                <Text style={styles.handle}>@{user.instagram}</Text>
+              )}
+            </View>
           </View>
         </View>
-      </View>
+      </AnimatedEntry>
 
       {/* Stats Row */}
-      <View style={styles.statsRow}>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{user?.eventsAttended || 0}</Text>
-          <Text style={styles.statLabel}>Events</Text>
-        </Card>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{user?.contentScore || 0}</Text>
-          <Text style={styles.statLabel}>Content</Text>
-        </Card>
-        <Card style={styles.statCard}>
-          <Text style={styles.statNumber}>{user?.reliabilityScore || 0}%</Text>
-          <Text style={styles.statLabel}>Reliability</Text>
-        </Card>
-      </View>
+      <AnimatedEntry delay={200}>
+        <View style={styles.statsRow}>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{user?.eventsAttended || 0}</Text>
+            <Text style={styles.statLabel}>Events</Text>
+          </Card>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{user?.contentScore || 0}</Text>
+            <Text style={styles.statLabel}>Content</Text>
+          </Card>
+          <Card style={styles.statCard}>
+            <Text style={styles.statNumber}>{user?.reliabilityScore || 0}%</Text>
+            <Text style={styles.statLabel}>Reliability</Text>
+          </Card>
+        </View>
+      </AnimatedEntry>
 
       {/* Upcoming Events */}
       <View style={styles.section}>
